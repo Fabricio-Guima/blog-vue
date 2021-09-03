@@ -1,17 +1,17 @@
 <template>
   <div class="container">
-    <h1>profile</h1>
+    <h1>Create Post</h1>
 
-    <profileComponent />
+    <CreatePostComponent />
   </div>
 </template>
 
 <script>
-import profileComponent from "@/components/Profile";
+import CreatePostComponent from "@/components/CreatePost";
 export default {
-  name: "Profile",
+  name: "CreatePost",
   components: {
-    profileComponent
+    CreatePostComponent
   }
 };
 </script>

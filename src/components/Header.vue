@@ -24,6 +24,9 @@
             >Profile</router-link
           >
           <router-link to="/posts" class="nav-item nav-link">Posts</router-link>
+          <router-link to="/create-post" class="nav-item nav-link"
+            >Create post</router-link
+          >
           <router-link to="/logout" class="nav-item nav-link"
             >Logout</router-link
           >

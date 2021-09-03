@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h1>Posts</h1>
     <div class="row">
       <div
         v-for="(post, index) in posts"
