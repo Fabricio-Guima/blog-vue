@@ -26,6 +26,17 @@ export default {
 img {
   display: block;
 }
+
+.v-enter,
+.v-leave-to {
+  opacity: 0;
+}
+
+.v-enter-active,
+.v-enter-leave {
+  transition: all 0.3s;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

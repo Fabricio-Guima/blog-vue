@@ -7,6 +7,11 @@ import "@/plugins/vee-validate";
 import "@/plugins/axios";
 
 import Vue2Filters from "vue2-filters";
+
+import Loading from "@/components/Loading";
+
+Vue.component("Loading", Loading);
+
 Vue.use(Vue2Filters);
 
 Vue.config.productionTip = false;

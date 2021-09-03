@@ -1,34 +1,55 @@
 <template>
-  <div class="container">
-    <h1>Posts</h1>
-    <div class="row">
-      <div
-        v-for="(post, index) in posts"
-        :key="index"
-        class="col-sm-12 col-md-6 col-lg-4 mb-4 align-items-center"
-      >
-        <div class="card mx-auto" style="width: 18rem;">
-          <router-link :to="{ name: 'post', params: { id: post.id } }">
-            <div class="container-card fake-img bg-primary">
-              <p class="text-white pt-4">{{ post.title }}</p>
+  <div>
+    <transition>
+      <div class="container" v-if="posts && posts.length" key="hasProduct">
+        <h1>Posts</h1>
+        <div class="row">
+          <div
+            v-for="(post, index) in posts"
+            :key="index"
+            class="col-sm-12 col-md-6 col-lg-4 mb-4 align-items-center"
+          >
+            <div class="card mx-auto" style="width: 18rem;">
+              <router-link :to="{ name: 'post', params: { id: post.id } }">
+                <div class="container-card fake-img bg-primary">
+                  <p class="text-white pt-4">{{ post.title }}</p>
+                </div>
+                <div class="card-body">
+                  <p class="card-text ">
+                    {{ post.body | truncate(25) }}
+                  </p>
+                </div>
+              </router-link>
             </div>
-            <div class="card-body">
-              <p class="card-text ">
-                {{ post.body | truncate(25) }}
-              </p>
-            </div>
-          </router-link>
+          </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+          <Pagination :totalItems="totalItems" />
         </div>
       </div>
-    </div>
-    <div class="row justify-content-center mt-5">
-      <Pagination :totalItems="totalItems" />
-    </div>
+
+      <div
+        class="container height"
+        v-else-if="posts && posts.length === 0"
+        key="hasNoProduct"
+      >
+        <div class="row">
+          <h2>Não há posts a serem visualizados</h2>
+        </div>
+      </div>
+
+      <div class="container height" v-else key="loading">
+        <div class="row height justify-content-center align-items-center">
+          <loading class="mt-5" />
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import Pagination from "@/components/Pagination";
+
 export default {
   name: "Posts",
   components: {
@@ -87,5 +108,9 @@ div.card {
 .fake-img {
   width: 100%;
   height: 150px;
+}
+
+.height {
+  height: 100vh !important;
 }
 </style>
