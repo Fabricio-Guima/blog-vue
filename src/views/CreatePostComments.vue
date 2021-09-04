@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>Editar post</h1>
+    <h1>Criar Comentário</h1>
     <div
       v-if="response.message"
       :class="`border rounded bg-${response.color} p-4 mb-4`"
@@ -16,16 +16,6 @@
       @submit.stop.prevent="update()"
       class="text-left"
     >
-      <div class="form-group">
-        <label for="title">Título</label>
-
-        <ValidationProvider v-slot="{ errors }" rules="required" name="title">
-          <input type="text" class="form-control" id="title" v-model="title" />
-          <div v-if="!!errors[0]" class="text-danger text-sm mt-2">
-            {{ errors[0] }}
-          </div>
-        </ValidationProvider>
-      </div>
       <div class="form-group">
         <label for="exampleInputtextarea1">Conteúdo</label>
         <ValidationProvider v-slot="{ errors }" rules="required" name="body">
@@ -47,7 +37,7 @@
           height="20"
           class="d-inline-block"
         />
-        Editar
+        Criar
       </button>
     </ValidationObserver>
   </div>
@@ -57,7 +47,7 @@
 import { ValidationObserver, ValidationProvider } from "vee-validate";
 import message from "@/utils/messages";
 export default {
-  name: "EditPost",
+  name: "CreatePostComment",
   components: {
     ValidationObserver,
     ValidationProvider
@@ -65,7 +55,6 @@ export default {
   props: ["id"],
   data() {
     return {
-      title: "",
       body: "",
       post: {},
       comments: [],
@@ -92,16 +81,15 @@ export default {
       this.spinner.update = true;
 
       const payload = {
-        title: this.title,
         body: this.body
       };
       this.$axios
-        .put(`/posts/${this.id}`, payload)
+        .post(`/posts/${this.id}/comments`, payload)
         .then((response) => {
           console.log("resposta: ", response.data);
 
           this.response.color = "success";
-          this.response.message = "Post atualizado com sucesso";
+          this.response.message = "Comentário criado com sucesso";
         })
         .catch((e) => {
           this.spinner.edit = false;
@@ -116,12 +104,11 @@ export default {
           this.spinner.edit = false;
         });
     },
-
-    getPostById() {
+    getCommentPostById() {
       this.$axios
-        .get(`/posts/${this.id}`)
+        .get(`/post-comments/${this.id}/show`)
         .then((response) => {
-          console.log(response.data);
+          console.log("aqui", response.data);
           this.title = response.data.data.title;
           this.body = response.data.data.body;
         })
@@ -129,13 +116,14 @@ export default {
           console.log(e);
         });
     },
+
     resetResponse() {
       this.response.color = "";
       this.response.message = "";
     }
   },
   created() {
-    this.getPostById();
+    this.getCommentPostById();
   }
 };
 </script>

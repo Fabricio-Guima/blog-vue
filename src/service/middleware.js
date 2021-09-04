@@ -16,7 +16,9 @@ export default {
       .get("/me")
       .then((response) => {
         if (!store?.state?.user?.id) {
+          let userLogged = true;
           store.commit("user/STORE_USER", response.data.data);
+          store.commit("user/UPDATE_USERLOGGED", userLogged);
         }
       })
       .catch(() => {

@@ -2,7 +2,8 @@ export default {
   namespaced: true,
 
   state: () => ({
-    user: {}
+    user: {},
+    userLogged: false
   }),
 
   getter: {},
@@ -10,6 +11,9 @@ export default {
   mutations: {
     STORE_USER(state, payload) {
       state.user = payload;
+    },
+    UPDATE_USERLOGGED(state, payload) {
+      state.userLogged = payload;
     }
   },
 

@@ -9,6 +9,13 @@
           >ver comentários</router-link
         >
         <router-link
+          :to="{ name: 'create-post-comments', params: { id: id } }"
+          tag="button"
+          class="btn btn-primary ml-3"
+          >Criar comentário</router-link
+        >
+
+        <router-link
           :to="{ name: 'edit-post', params: { id: id } }"
           tag="button"
           class="btn btn-primary ml-3"
@@ -36,8 +43,6 @@
         </div>
       </div>
     </transition>
-
-    <!-- Modal de confirmação -->
 
     <!-- Modal -->
     <div

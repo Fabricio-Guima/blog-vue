@@ -8,7 +8,6 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-
     name: "Home",
     component: Home
   },
@@ -74,6 +73,16 @@ const routes = [
       import(/* webpackChunkName: "profile" */ "../views/Post.vue")
   },
   {
+    path: "/post-public/:id",
+    name: "post-public",
+    props: true,
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "post-public" */ "../views/PostPublic.vue")
+  },
+  {
     path: "/create-post",
     name: "create-post",
     props: true,
@@ -84,7 +93,6 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "create-post" */ "../views/CreatePost.vue")
   },
-
   {
     path: "/edit-post/:id",
     name: "edit-post",
@@ -95,6 +103,19 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "edit-post" */ "../views/EditPost.vue")
+  },
+  {
+    path: "create-post-comments/:id",
+    name: "create-post-comments",
+    props: true,
+    beforeEnter: Guard.redirectIfNotAuthenticated,
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(
+        /* webpackChunkName: "create-post-comments" */ "../views/CreatePostComments.vue"
+      )
   },
 
   {
@@ -109,6 +130,40 @@ const routes = [
       import(
         /* webpackChunkName: "post-comments" */ "../views/PostComments.vue"
       )
+  },
+  {
+    path: "/post-comments-public/:id",
+    name: "post-comments-public",
+    props: true,
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(
+        /* webpackChunkName: "post-comments" */ "../views/PostCommentsPublic.vue"
+      )
+  },
+  {
+    path: "/edit-comment/:id",
+    name: "edit-comment",
+    props: true,
+    beforeEnter: Guard.redirectIfNotAuthenticated,
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "edit-comment" */ "../views/EditComment.vue")
+  },
+  {
+    path: "/my-comments",
+    name: "my-comments",
+    props: true,
+    beforeEnter: Guard.redirectIfNotAuthenticated,
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "my-comments" */ "../views/MyComments.vue")
   }
 ];
 

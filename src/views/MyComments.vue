@@ -2,13 +2,13 @@
   <div>
     <transition>
       <div class="container" v-if="comments && comments.length" key="comments">
-        <h1>Post Comments</h1>
+        <h1>Meus Comentários</h1>
 
         <div class="row">
           <div
             v-for="(comment, index) in comments"
             :key="index"
-            class="col-sm-12 align-items-center"
+            class="col-sm-12"
           >
             <!-- <router-link :to="{ name: 'post', params: { id: post.id } }">
         </router-link> -->
@@ -151,11 +151,11 @@ export default {
   },
   computed: {
     url() {
-      return `/post-comments/${this.id}?page=${Number(this.$route.query.page)}`;
+      return `/post-comments?page=${Number(this.$route.query.page)}`;
     }
   },
   methods: {
-    getAllCommentsPostById() {
+    getAllCommentsPostByUser() {
       this.comments = null;
 
       this.$axios
@@ -183,8 +183,7 @@ export default {
           document.getElementById("btn-close").click();
 
           this.$router.push({
-            name: "post",
-            params: { id: this.id }
+            name: "posts"
           });
         })
         .catch((e) => {
@@ -198,11 +197,11 @@ export default {
   },
   watch: {
     url() {
-      this.getAllCommentsPostById();
+      this.getAllCommentsPostByUser();
     }
   },
   created() {
-    this.getAllCommentsPostById();
+    this.getAllCommentsPostByUser();
   }
 };
 </script>

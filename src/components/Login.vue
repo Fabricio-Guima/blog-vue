@@ -119,7 +119,7 @@ export default {
 
           this.$store.commit("user/STORE_USER", response.data.data);
 
-          this.$router.push({ name: "logged" });
+          this.$router.push({ name: "posts" });
         })
         .catch((e) => {
           this.spinner.login = false;

@@ -12,22 +12,6 @@
           >
             <!-- <router-link :to="{ name: 'post', params: { id: post.id } }">
         </router-link> -->
-            <router-link
-              :to="{ name: 'edit-comment', params: { id: comment.id } }"
-              tag="button"
-              class="btn btn-primary"
-              >Editar meu comentário</router-link
-            >
-            <button
-              :data-id="comment.id"
-              type="button"
-              class="btn btn-danger ml-3"
-              data-toggle="modal"
-              data-target="#exampleModal"
-              @click="getBtnId(comment.id)"
-            >
-              Excluir comentário
-            </button>
             <div id="accordion" class="mb-4">
               <div class="card">
                 <div class="card-header" :id="`heading${index}`">
@@ -62,57 +46,6 @@
         <div class="row justify-content-center mt-5">
           <Pagination :totalItems="totalItems" />
         </div>
-
-        <!-- Modal -->
-        <div
-          v-if="closeModal"
-          class="modal fade"
-          id="exampleModal"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-          style="display-none: none"
-        >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                  Deletar comentário
-                </h5>
-                <button
-                  type="button"
-                  class="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Deseja deletar este Comentário?
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  id="btn-close"
-                  class=" btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="button"
-                  @click="deleteCommentById"
-                  class="btn btn-primary"
-                >
-                  Deletar
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Fim modal -->
       </div>
 
       <div class="container" v-else-if="noComments" key="noComments">
@@ -142,20 +75,20 @@ export default {
   props: ["id"],
   data() {
     return {
-      closeModal: true,
       comments: [],
       noComments: false,
-      totalItems: 0,
-      commentId: null
+      totalItems: 0
     };
   },
   computed: {
     url() {
-      return `/post-comments/${this.id}?page=${Number(this.$route.query.page)}`;
+      return `/post-comments/${this.id}/public?page=${Number(
+        this.$route.query.page
+      )}`;
     }
   },
   methods: {
-    getAllCommentsPostById() {
+    getAllCommentsPostByIdPublic() {
       this.comments = null;
 
       this.$axios
@@ -173,36 +106,15 @@ export default {
         .catch((e) => {
           console.log(e);
         });
-    },
-    deleteCommentById() {
-      this.$axios
-        .delete(`/post-comments/${this.commentId}`)
-        .then((response) => {
-          console.log(response.data);
-
-          document.getElementById("btn-close").click();
-
-          this.$router.push({
-            name: "post",
-            params: { id: this.id }
-          });
-        })
-        .catch((e) => {
-          document.getElementById("btn-close").click();
-          console.log(e);
-        });
-    },
-    getBtnId(id) {
-      this.commentId = id;
     }
   },
   watch: {
     url() {
-      this.getAllCommentsPostById();
+      this.getAllCommentsPostByIdPublic();
     }
   },
   created() {
-    this.getAllCommentsPostById();
+    this.getAllCommentsPostByIdPublic();
   }
 };
 </script>
