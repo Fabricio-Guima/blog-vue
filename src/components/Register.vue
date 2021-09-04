@@ -137,7 +137,8 @@ export default {
           console.log(response);
 
           this.response.color = "success";
-          this.response.message = "Seu cadastro foi feito com sucesso.";
+          this.response.message =
+            "Seu cadastro foi feito com sucesso. Seja bem vindo(a)";
 
           this.resetForm();
         })
